@@ -49,7 +49,9 @@
 
 1.  **使用：参考视频**
 
-<video src="./read_2025-04-24.mp4" controls width="100%"></video>
+
+
+https://github.com/user-attachments/assets/89738e0b-e991-4833-91b4-ae3f87199a41
 
 
 
@@ -60,6 +62,7 @@
     程序启动后，会监听 `http://localhost:58080` 并尝试自动在您的默认浏览器中打开此地址。您可以通过浏览器访问 Matu7 的管理界面。
 
 4.  **命令参考:**
+
     open -a "TscanPlus_Mac_Arm64_v2.2.app"  
     java -jar webfinder-3.2.jar
 
