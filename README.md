@@ -48,7 +48,7 @@
 ### 运行
 
 1.  **使用：参考视频**
-    
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1EcLizpEFa&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 2.  **首次运行配置:**
     程序启动后，会在终端打印日志。如果是首次运行且未配置工具扫描目录，它会提示您输入一个初始的根目录路径，用于存放您的离线工具。输入路径并按回车。如果目录不存在，会询问是否创建。
