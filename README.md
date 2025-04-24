@@ -64,20 +64,7 @@
 
 5. **打印笔记模板-格式：**
 
-    # Docker常用命令
+    ![image](https://github.com/user-attachments/assets/2dbbb04a-6d5f-4060-a388-9dfc4286efaa)
 
-    Docker是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中。
-
-    ## 基本概念
-
-    - 镜像(Image)：Docker容器的模板，只读的
-
-    ## 镜像管理
-
-    查看和操作Docker镜像：
-
-    ```
-    docker images                 # 列出本地所有镜像
-    ```
 
 
