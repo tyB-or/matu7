@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>工具管理系统</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/file-browser.css">
+  <link rel="stylesheet" href="/css/fontawesome/all.min.css">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-toolbox"></i> 工具管理
+      </div>
+      <nav>
+        <div class="nav-dropdown" id="offline-tools-dropdown">
+          <a href="#" class="nav-link nav-dropdown-toggle" id="offline-tools-toggle">
+            <span><i class="fas fa-desktop"></i> 离线工具</span>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </a>
+          <div class="nav-dropdown-menu" id="offline-categories-menu">
+            <!-- 分类菜单项将通过JavaScript动态生成 -->
+          </div>
+        </div>
+        <a href="#" class="nav-link" id="web-tools-link">
+          <i class="fas fa-globe"></i> 网页工具
+        </a>
+        <a href="#" class="nav-link" id="web-notes-link">
+          <i class="fas fa-sticky-note"></i> 网页笔记
+        </a>
+      </nav>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+      <!-- 离线工具页面 -->
+      <div id="offline-tools-page" style="display: block;">
+        <div class="search-container">
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" id="offline-tools-search" placeholder="搜索工具名称、描述、tag:标签搜索">
+              <button class="btn btn-primary" id="offline-tools-search-btn">
+                <i class="fas fa-search"></i> 搜索
+              </button>
+            </div>
+            
+            <div class="actions">
+              <div class="root-path-quick-switcher">
+                <select id="quick-root-path-select" class="form-control">
+                  <!-- 将通过JavaScript动态填充 -->
+                </select>
+                <button class="btn btn-primary" id="quick-root-path-switch-btn" title="切换到选中的根目录">
+                  <i class="fas fa-random"></i> 切换
+                </button>
+                <button class="btn btn-success" id="quick-root-path-add-btn" title="添加新的根目录">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button class="btn btn-danger" id="quick-root-path-delete-btn" title="删除当前根目录(保留配置)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+              
+              <button class="btn btn-success" id="offline-tools-refresh-btn">
+                <i class="fas fa-sync-alt"></i> 刷新工具
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="offline-tools-grid" class="tools-grid"></div>
+      </div>
+
+      <!-- 网页工具页面 -->
+      <div id="web-tools-page" style="display: none;">
+        <div class="search-container">
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" id="web-tools-search" placeholder="搜索工具名称、描述、tag:标签搜索">
+              <button class="btn btn-primary" id="web-tools-search-btn">
+                <i class="fas fa-search"></i> 搜索
+              </button>
+            </div>
+            <div class="actions">
+              <button class="btn btn-success" id="web-tools-add-btn">
+                <i class="fas fa-plus"></i> 添加工具
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="web-tools-grid" class="tools-grid"></div>
+      </div>
+
+      <!-- 网页笔记页面 -->
+      <div id="web-notes-page" style="display: none;">
+        <div class="search-container">
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" id="web-notes-search" placeholder="搜索笔记标题、内容、tag:标签搜索">
+              <button class="btn btn-primary" id="web-notes-search-btn">
+                <i class="fas fa-search"></i> 搜索
+              </button>
+            </div>
+            <div class="actions">
+              <button class="btn btn-success" id="web-notes-add-btn">
+                <i class="fas fa-plus"></i> 添加笔记
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="table-container">
+          <table class="table" id="web-notes-table">
+            <thead>
+              <tr>
+                <th>标题</th>
+                <th>标签</th>
+                <th>内容</th>
+                <th>创建时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 离线工具笔记面板 -->
+  <div class="note-panel closed" id="offline-tool-note-panel">
+    <div class="note-panel-resize-handle" id="offline-tool-note-resize-handle"></div>
+    <div class="note-panel-header">
+      <h3 id="offline-tool-note-title">笔记</h3>
+      <button class="btn btn-icon" id="offline-tool-note-close-btn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="note-panel-body">
+      <textarea class="form-control" id="offline-tool-note-content" placeholder="在这里添加笔记..."></textarea>
+    </div>
+    <div class="note-panel-footer">
+      <span class="status" id="offline-tool-note-status"></span>
+      <button class="btn btn-primary" id="offline-tool-note-save-btn">
+        <i class="fas fa-save"></i> 保存
+      </button>
+    </div>
+  </div>
+
+  <!-- 网页工具笔记面板 -->
+  <div class="note-panel closed" id="web-tool-note-panel">
+    <div class="note-panel-resize-handle" id="web-tool-note-resize-handle"></div>
+    <div class="note-panel-header">
+      <h3 id="web-tool-note-title">笔记</h3>
+      <button class="btn btn-icon" id="web-tool-note-close-btn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="note-panel-body">
+      <textarea class="form-control" id="web-tool-note-content" placeholder="在这里添加笔记..."></textarea>
+    </div>
+    <div class="note-panel-footer">
+      <span class="status" id="web-tool-note-status"></span>
+      <button class="btn btn-primary" id="web-tool-note-save-btn">
+        <i class="fas fa-save"></i> 保存
+      </button>
+    </div>
+  </div>
+
+  <!-- 添加/编辑网页工具模态框 -->
+  <div class="modal" id="web-tool-modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="web-tool-modal-title">添加网页工具</h3>
+        <button class="btn btn-icon" id="web-tool-modal-close-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="web-tool-id">
+        <div class="form-group">
+          <label class="form-label" for="web-tool-name">名称</label>
+          <input type="text" class="form-control" id="web-tool-name" placeholder="工具名称" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="web-tool-url">URL</label>
+          <input type="url" class="form-control" id="web-tool-url" placeholder="https://example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="web-tool-description">描述</label>
+          <textarea class="form-control" id="web-tool-description" placeholder="工具描述"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="web-tool-tags">标签</label>
+          <input type="text" class="form-control" id="web-tool-tags" placeholder="多个标签用逗号分隔">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="web-tool-icon">图标</label>
+          <input type="text" class="form-control" id="web-tool-icon" placeholder="fa-globe">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="web-tool-modal-cancel-btn">取消</button>
+        <button class="btn btn-primary" id="web-tool-modal-save-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加/编辑网页笔记模态框 -->
+  <div class="modal" id="web-note-modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="web-note-modal-title">添加网页笔记</h3>
+        <button class="btn btn-icon" id="web-note-modal-close-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="web-note-id">
+        <div class="form-group">
+          <label class="form-label" for="web-note-title">标题</label>
+          <input type="text" class="form-control" id="web-note-title" placeholder="笔记标题" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="web-note-url">URL</label>
+          <input type="url" class="form-control" id="web-note-url" placeholder="https://example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="web-note-tags">标签</label>
+          <input type="text" class="form-control" id="web-note-tags" placeholder="多个标签用逗号分隔">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="web-note-content">笔记内容</label>
+          <textarea class="form-control" id="web-note-content" placeholder="笔记内容"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="web-note-modal-cancel-btn">取消</button>
+        <button class="btn btn-primary" id="web-note-modal-save-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 编辑离线工具模态框 -->
+  <div class="modal" id="offline-tool-edit-modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">编辑离线工具</h3>
+        <button class="btn btn-icon" id="offline-tool-edit-close-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="offline-tool-edit-id">
+        <div class="form-group">
+          <label class="form-label" for="offline-tool-edit-name">名称</label>
+          <input type="text" class="form-control" id="offline-tool-edit-name" placeholder="工具名称" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="offline-tool-edit-description">描述</label>
+          <textarea class="form-control" id="offline-tool-edit-description" placeholder="工具描述"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="offline-tool-edit-tags">标签</label>
+          <input type="text" class="form-control" id="offline-tool-edit-tags" placeholder="多个标签用逗号分隔">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="offline-tool-edit-command">执行命令</label>
+          <input type="text" class="form-control" id="offline-tool-edit-command" placeholder="执行命令">
+          <div class="small-text-display" id="offline-tool-edit-category-path"></div>
+          <div class="small-text-display" id="offline-tool-edit-matu7-path"></div>
+        </div>
+        
+        <!-- 文件浏览器 -->
+        <div class="form-group">
+          <div class="collapsible-section">
+            <div class="collapsible-header" id="file-browser-toggle">
+              <i class="fas fa-folder-open"></i> 文件浏览器
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="collapsible-content" id="file-browser-content" style="display: none;">
+              <div class="file-browser-container">
+                <div class="file-browser-loading">加载中...</div>
+                <div class="file-browser-list"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="offline-tool-edit-cancel-btn">取消</button>
+        <button class="btn btn-primary" id="offline-tool-edit-save-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html> 

@@ -1,0 +1,15 @@
+{
+    "name": "ManReader",
+    "version": "1.0.0",
+    "description": "彩色命令手册阅读器，可以美观地显示命令行工具的使用手册",
+    "author": "Matu7 Team",
+    "command": {
+        "windows": "run.bat",
+        "unix": "./run.sh"
+    },
+    "categories": ["文档", "工具", "终端"],
+    "tags": ["手册", "命令", "教程", "彩色", "终端"],
+    "dependencies": {
+        "go": ">=1.16"
+    }
+} 
