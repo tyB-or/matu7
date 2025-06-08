@@ -67,7 +67,9 @@ body {
 
 /* 导航 */
 .nav-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0.75rem 1rem;
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
@@ -78,6 +80,15 @@ body {
 .nav-link:hover, .nav-link.active {
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
+}
+
+.nav-link > span:first-child {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link i {
+  margin-right: 8px;
 }
 
 /* 子菜单样式 */
@@ -172,9 +183,31 @@ body {
 
 .card-header-content {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+/* 工具图标样式 */
+.tool-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.tool-icon img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.tool-icon i {
+  font-size: 1.1rem;
+  color: #0077cc;
 }
 
 .card-title {
@@ -482,6 +515,7 @@ body {
 /* 表单 */
 .form-group {
   margin-bottom: 1rem;
+  position: relative; /* 添加相对定位以便内部的绝对定位元素可以相对它进行定位 */
 }
 
 .form-label {
@@ -1157,4 +1191,286 @@ textarea.form-control {
   font-family: 'Courier New', monospace;
   max-width: 100%;
   display: block;
+}
+
+/* 使用次数更新效果 */
+@keyframes count-update-flash {
+  0%, 100% { color: inherit; }
+  50% { color: #4f46e5; font-weight: bold; }
+}
+
+.count-updated {
+  animation: count-update-flash 1.5s ease;
+}
+
+/* 最后使用时间突出显示 */
+.tool-meta.time-meta span:last-child {
+  color: #4f46e5;
+}
+
+/* 图标管理样式 */
+.icon-management {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.icon-preview {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.icon-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.icon-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-status {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* 全局滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+/* Firefox滚动条 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+/* 网页笔记表格样式 */
+#web-notes-table {
+  table-layout: fixed; /* 固定表格布局，使列宽设置生效 */
+}
+
+/* 网页笔记表格列宽设置 - 比例为5:2:1:1:1:1 */
+#web-notes-table .col-title {
+  width: 45.5%;
+}
+
+#web-notes-table .col-tags {
+  width: 18.2%;
+}
+
+#web-notes-table .col-tool {
+  width: 9.1%;
+}
+
+#web-notes-table .col-source {
+  width: 9.1%;
+}
+
+#web-notes-table .col-time {
+  width: 9.1%;
+}
+
+#web-notes-table .col-actions {
+  width: 9.1%;
+  white-space: nowrap;
+}
+
+/* 表头样式美化 */
+#web-notes-table thead tr {
+  background: linear-gradient(to right, #4f46e5, #6366f1);
+  color: black;
+  border-radius: 8px 8px 0 0;
+}
+
+#web-notes-table thead th {
+  padding: 12px 16px;
+  font-weight: 600;
+  border-bottom: none;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* 文本省略显示 */
+#web-notes-table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 0; /* 与table-layout: fixed配合使用，实现溢出省略 */
+  position: relative;
+}
+
+/* 当鼠标悬停时显示完整内容的工具提示 */
+#web-notes-table td[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: #333;
+  color: #fff;
+  border-radius: 3px;
+  padding: 5px 8px;
+  z-index: 100;
+  white-space: normal;
+  max-width: 300px;
+  word-wrap: break-word;
+  font-size: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 网页笔记操作按钮样式调整 */
+#web-notes-table .btn-sm {
+  padding: 0.2rem 0.3rem;
+  margin-right: 4px;
+}
+
+/* 标题链接样式 */
+#web-notes-table .note-title {
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#web-notes-table .note-title:hover {
+  text-decoration: underline;
+}
+
+/* 工具搜索下拉框样式 */
+.tool-input-container {
+  position: relative;
+}
+
+/* 统一所有建议框样式 */
+.tags-suggestions,
+.suggestions {
+  position: absolute;
+  top: 100% !important;
+  left: 0 !important;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  margin-top: 3px;
+}
+
+.suggestion-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f5f5f5;
+}
+
+.suggestion-item.active {
+  background-color: #e6f7ff;
+}
+
+.count {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 0 6px;
+  font-size: 0.75rem;
+  min-width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
+
+.title-with-count {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notes-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4f46e5;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 3px 10px;
+  min-width: 24px;
+  height: 24px;
+}
+
+.tags-input-container,
+#web-tags-input-container,
+#web-category-input-container,
+#web-note-tags-input-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-height: 38px;
+  gap: 6px;
+  cursor: text;
+}
+
+.tags-input-container .tag,
+#web-tags-input-container .tag,
+#web-category-input-container .tag,
+#web-note-tags-input-container .tag {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+  color: #1890ff;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tags-input-field,
+#web-tags-input-field,
+#web-category-input-field,
+#web-note-tags-input-field {
+  flex: 1;
+  min-width: 60px;
+  border: none;
+  outline: none;
+  padding: 0;
+  background: transparent;
+  margin: 0;
+  height: 26px;
 } 
