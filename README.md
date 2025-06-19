@@ -2,7 +2,7 @@
 
 Matu7 是一个使用 Go 和 Web 技术构建的桌面应用，旨在帮助安全专业人员和爱好者高效地管理本地的离线渗透测试工具和常用的在线资源。
 
-使用视频：
+
 https://github.com/user-attachments/assets/a1df7af4-e7fa-4a8b-89a0-5cc3e2ef4717
 
 
