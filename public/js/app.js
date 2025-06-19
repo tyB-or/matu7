@@ -2811,7 +2811,7 @@ function renderWebNotes(notes) {
   });
 }
 
-  // 搜索网页笔记
+// 搜索网页笔记
 function searchWebNotes(query) {
   // 显示搜索中状态
   showSearchStatus('loading', '搜索中...', 'web-notes');
@@ -3303,7 +3303,7 @@ function initWebToolsPage() {
   initWebUrlInputListener();
 }
 
-  // 初始化网页笔记页面
+// 初始化网页笔记页面
 function initWebNotesPage() {
   // 加载网页笔记列表
   loadWebNotes();
@@ -5549,7 +5549,7 @@ function renderWebRecentCategories(categories) {
     });
     
     recentCategoriesList.appendChild(categoryItem);
-  });
+    });
 }
 
 // 加载网页工具标签建议
@@ -5593,7 +5593,7 @@ function loadWebToolTagSuggestions() {
         commonTags: commonTags.length,
         recentTags: recentTags.length
       });
-      
+        
       // 如果没有返回常用标签，则从所有标签中提取
       if (commonTags.length === 0 && allTags.length > 0) {
         commonTags = [...allTags].sort((a, b) => {
@@ -5672,7 +5672,7 @@ function renderWebRecentTags(tags) {
   tags.forEach(tag => {
     // 支持字符串或对象格式的标签数据
     const tagName = typeof tag === 'object' ? (tag.name || '') : tag;
-    
+          
     // 跳过常用标签中已有的标签
     if (commonTagsSet.has(tagName)) return;
     
@@ -5727,7 +5727,7 @@ function initWebTagsInput() {
     
     // 监听窗口大小变化，更新提示框位置
     window.addEventListener('resize', updateSuggestionsPosition);
-    
+            
     // 输入标签时的事件
     tagsInputField.addEventListener('input', function() {
       const inputValue = this.value.trim();
@@ -5764,7 +5764,7 @@ function initWebTagsInput() {
             
             tagsSuggestions.appendChild(suggestionItem);
           });
-          
+                    
           // 显示提示框
           tagsSuggestions.style.display = 'block';
           
@@ -5791,7 +5791,7 @@ function initWebTagsInput() {
         }
       }
     });
-    
+                    
     // 点击外部关闭标签建议
     document.addEventListener('click', function(e) {
       if (!tagsInputContainer.contains(e.target) && e.target !== tagsSuggestions && !tagsSuggestions.contains(e.target)) {
@@ -5823,8 +5823,8 @@ function addWebTag(tagName) {
     e.stopPropagation(); // 阻止事件冒泡
     const tag = this.getAttribute('data-tag');
     removeWebTag(tag);
-  });
-  
+                });
+                
   // 将标签添加到容器中
   document.getElementById('web-tags-input-container').insertBefore(tagElement, document.getElementById('web-tags-input-field'));
   
